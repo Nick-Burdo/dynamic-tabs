@@ -33,3 +33,42 @@ $ yarn install
 ```
 $ yarn start
 ```
+
+# React Sortable Tree
+
+## Получение и подготовка данных:
+
+Используемые атрибуты контейнеров(сенсоров):
+```
+id
+name
+type
+parent
+```
+
+1. Создаем массив данных и включаем в него контейнер (сенсор) для переноса
+```
+const data = [movedContainer]
+```
+
+2. Получаем родительский контейнер и добавляем в `data` родительский контейнер и его контейнеры, которые старше переносимого.
+Родительский контейнер помечаем `expanded`
+```
+getContainerInfo(movedContainer.parent)
+    .then(result => {
+        const {items, ...props} = result;
+        props.expanded = true;
+        data.push(props);
+        data.concat(items.filter(item => isGreatThen(item.type, movedContainer.type)));
+    });
+```
+    
+3. Повторяем операцию 2, пока `parent` очередного контейнера не `sensorspace`
+   
+4. Добавляем в `data` контейнеры из `current_sensorspace`
+```
+   data.push(current_sensorspace.items);
+```
+   
+   
+   
