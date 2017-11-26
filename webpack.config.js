@@ -8,7 +8,7 @@ module.exports = {
         vendor: ['react', 'react-dom', 'react-router']
     },
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
     devtool: "cheap-inline-module-source-map",
@@ -31,7 +31,7 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: Infinity,
-            filename: '[name].[hash].js'
+            filename: '[name].js'
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src/index.html'),

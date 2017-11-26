@@ -1,8 +1,7 @@
 import {find} from 'lodash';
 
 // add container to be moved
-const movedContainer = {id: 'channel2', type: 'channel', name: 'Channel 2', parent: 'hord2'};
-let initialData = [movedContainer];
+export const movedContainer = {id: 'channel2', type: 'channel', name: 'Channel 2', parent: 'hord2'};
 
 // request all containers are above the one that will be moved
 // getAllAbove(movedContainer.type)
@@ -22,22 +21,19 @@ const containers = [
   {id: 'hord3', type:'hord', name: 'Hord 3', parent: 'herd2'},
   {id: 'hord4', type:'hord', name: 'Hord 4', parent: 'superhord4'},
 ];
-initialData = initialData.concat(containers);
 
 // expand all parents of container to be moved
 const expandParents = (element, collection) => {
-  if (!element.parent) return;
-
-  const parentElement = find(collection, ['id', element.parent]);
-  if (parentElement) {
-    parentElement.expanded = true;
-    if (parentElement.parent) {
-      expandParents(parentElement, collection);
+  if (element.parent) {
+    const parentElement = find(collection, ['id', element.parent]);
+    if (parentElement) {
+      parentElement.expanded = true;
+      if (parentElement.parent) {
+        collection = expandParents(parentElement, collection);
+      }
     }
   }
+  return collection;
 };
 
-expandParents(movedContainer, containers);
-
-export {initialData, movedContainer};
- 
+export const initialData = [].concat(movedContainer, expandParents(movedContainer, containers));
